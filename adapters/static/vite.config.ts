@@ -15,6 +15,7 @@ export default extendConfig(baseConfig, () => {
         plugins: [
             staticAdapter({
                 origin: 'https://costicapuntaru.github.io/',
+                base: '/team-stopwatch/build/',
             }),
         ],
     };
