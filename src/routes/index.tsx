@@ -3,11 +3,13 @@ import type { DocumentHead } from '@builder.io/qwik-city';
 import { playerStore } from "~/utils/player-store";
 import { useCustomNavigate } from "~/utils/navigation";
 import { PlayerName } from "~/components/player-name";
+import { BasePathContext } from "~/base-path";
 
 
 export default component$(() => {
     const currentPlayerName = useSignal('')
     const store = useContext(playerStore)
+    const {basePath} = useContext(BasePathContext)
     const nav = useCustomNavigate();
     return (
         <>
@@ -75,7 +77,7 @@ export default component$(() => {
                     };
                     new Audio("/files/race-start-beeps-125125.mp3").play();
                     setTimeout(() => {
-                        nav('/games/game?gameId=' + startTime)
+                        nav(`${basePath}/games/game?gameId=${startTime}`)
                     }, 3000)
                 }}
             >

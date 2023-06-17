@@ -1,10 +1,11 @@
 import { staticAdapter } from '@builder.io/qwik-city/adapters/static/vite';
 import { extendConfig } from '@builder.io/qwik-city/vite';
 import baseConfig from '../../vite.config';
+import { deployedBasePath } from "../../src/base-path";
 
 export default extendConfig(baseConfig, () => {
     return {
-        base: '/team-stopwatch/',
+        base: deployedBasePath,
         build: {
             ssr: true,
             rollupOptions: {
@@ -14,7 +15,7 @@ export default extendConfig(baseConfig, () => {
         plugins: [
             staticAdapter({
                 origin: 'https://costicapuntaru.github.io/',
-                base: '/team-stopwatch/build/',
+                base: `${deployedBasePath}/build/`,
             }),
         ],
     };

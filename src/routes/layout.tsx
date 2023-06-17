@@ -1,10 +1,11 @@
-import { component$, Slot, useStyles$ } from '@builder.io/qwik';
+import { component$, Slot, useContext, useStyles$ } from '@builder.io/qwik';
 import type { RequestHandler } from '@builder.io/qwik-city';
 import { routeLoader$ } from '@builder.io/qwik-city';
 
 import styles from './styles.css?inline';
 import { getViewTransitionStyle } from "~/utils/transition";
 import { usePlayerStore } from "~/utils/store";
+import { BasePathContext } from "~/base-path";
 
 export const onGet: RequestHandler = async ({ cacheControl }) => {
     // Control caching for this request for best performance and to reduce hosting costs:
@@ -26,15 +27,15 @@ export const useServerTimeLoader = routeLoader$(() => {
 export default component$(() => {
     useStyles$(styles);
     const store = usePlayerStore()
-
+    const { basePath } = useContext(BasePathContext)
 
     return (
         <div class="container">
             <section style={getViewTransitionStyle('header')}>
-                <a href="/">
+                <a href={basePath}>
                     Home
                 </a>
-                <a href="/games">
+                <a href={`${basePath}/games`}>
                     Game List ({store.gameList.length})
                 </a>
             </section>
