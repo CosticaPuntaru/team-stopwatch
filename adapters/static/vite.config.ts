@@ -6,7 +6,6 @@ export default extendConfig(baseConfig, () => {
     return {
         base: '/team-stopwatch/',
         build: {
-
             ssr: true,
             rollupOptions: {
                 input: ['@qwik-city-plan'],
