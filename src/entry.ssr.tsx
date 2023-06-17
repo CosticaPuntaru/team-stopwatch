@@ -16,7 +16,7 @@ import Root from './root';
 import { deployedBasePath } from "~/base-path";
 
 export default function (opts: RenderToStreamOptions) {
-    return renderToStream(<Root isDevelopment={true}/>, {
+    return renderToStream(<Root/>, {
         manifest,
         ...opts,
         base: `${deployedBasePath}/build/`,
@@ -25,5 +25,9 @@ export default function (opts: RenderToStreamOptions) {
             lang: 'en-us',
             ...opts.containerAttributes,
         },
+        serverData: {
+            ...opts.serverData,
+            isDevelopment: true
+        }
     });
 }

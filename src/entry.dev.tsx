@@ -13,5 +13,11 @@ import { render, type RenderOptions } from '@builder.io/qwik';
 import Root from './root';
 
 export default function (opts: RenderOptions) {
-  return render(document, <Root isDevelopment={true} />, opts);
+    return render(document, <Root/>, {
+        ...opts,
+        serverData: {
+            ...opts.serverData,
+            isDevelopment: true
+        }
+    });
 }

@@ -16,6 +16,9 @@ export default extendConfig(baseConfig, () => {
             staticAdapter({
                 origin: 'https://costicapuntaru.github.io/',
                 base: `${deployedBasePath}/build/`,
+                serverData: {
+                    isDevelopment: false,
+                }
             }),
         ],
     };
