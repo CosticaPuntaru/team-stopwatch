@@ -1,38 +1,46 @@
 import { component$, Slot, useStyles$ } from '@builder.io/qwik';
-import { routeLoader$ } from '@builder.io/qwik-city';
 import type { RequestHandler } from '@builder.io/qwik-city';
-
-import Header from '~/components/starter/header/header';
-import Footer from '~/components/starter/footer/footer';
+import { routeLoader$ } from '@builder.io/qwik-city';
 
 import styles from './styles.css?inline';
+import { getViewTransitionStyle } from "~/utils/transition";
+import { usePlayerStore } from "~/utils/store";
 
 export const onGet: RequestHandler = async ({ cacheControl }) => {
-  // Control caching for this request for best performance and to reduce hosting costs:
-  // https://qwik.builder.io/docs/caching/
-  cacheControl({
-    // Always serve a cached response by default, up to a week stale
-    staleWhileRevalidate: 60 * 60 * 24 * 7,
-    // Max once every 5 seconds, revalidate on the server to get a fresh version of this page
-    maxAge: 5,
-  });
+    // Control caching for this request for best performance and to reduce hosting costs:
+    // https://qwik.builder.io/docs/caching/
+    cacheControl({
+        // Always serve a cached response by default, up to a week stale
+        staleWhileRevalidate: 60 * 60 * 24 * 7,
+        // Max once every 5 seconds, revalidate on the server to get a fresh version of this page
+        maxAge: 5,
+    });
 };
 
 export const useServerTimeLoader = routeLoader$(() => {
-  return {
-    date: new Date().toISOString(),
-  };
+    return {
+        date: new Date().toISOString(),
+    };
 });
 
 export default component$(() => {
-  useStyles$(styles);
-  return (
-    <>
-      <Header />
-      <main>
-        <Slot />
-      </main>
-      <Footer />
-    </>
-  );
+    useStyles$(styles);
+    const store = usePlayerStore()
+
+
+    return (
+        <div class="container">
+            <section style={getViewTransitionStyle('header')}>
+                <a href="/">
+                    Home
+                </a>
+                <a href="/games">
+                    Game List ({store.gameList.length})
+                </a>
+            </section>
+            <main>
+                <Slot/>
+            </main>
+        </div>
+    );
 });
