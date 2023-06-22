@@ -114,7 +114,7 @@ export default component$(() => {
                             time: 0
                         })),
                     };
-                    new Audio("/files/race-start-beeps-125125.mp3").play();
+                    new Audio("/team-stopwatch/files/race-start-beeps-125125.mp3").play();
                     setTimeout(() => {
                         nav(`/team-stopwatch/games/game?gameId=${startTime}`)
                     }, 3000)
