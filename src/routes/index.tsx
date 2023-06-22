@@ -75,7 +75,7 @@ export default component$(() => {
                     };
                     new Audio("/files/race-start-beeps-125125.mp3").play();
                     setTimeout(() => {
-                        nav(`/games/game?gameId=${startTime}`)
+                        nav(`/team-stopwatch/games/game?gameId=${startTime}`)
                     }, 3000)
                 }}
             >

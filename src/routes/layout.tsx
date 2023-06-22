@@ -30,10 +30,10 @@ export default component$(() => {
     return (
         <div class="container">
             <section style={getViewTransitionStyle('header')}>
-                <a href={'/'}>
+                <a href={'/team-stopwatch/'}>
                     Home
                 </a>
-                <a href={`/games`}>
+                <a href={`/team-stopwatch/games`}>
                     Game List ({store.gameList.length})
                 </a>
             </section>
