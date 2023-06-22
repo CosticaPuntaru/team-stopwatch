@@ -13,7 +13,6 @@
 import { createQwikCity } from '@builder.io/qwik-city/middleware/node';
 import qwikCityPlan from '@qwik-city-plan';
 import render from './entry.ssr';
-import { deployedBasePath } from "~/base-path";
 
 /**
  * The default export is the QwikCity adapter used by Vite preview.
@@ -21,9 +20,4 @@ import { deployedBasePath } from "~/base-path";
 export default createQwikCity({
     render,
     qwikCityPlan,
-    base: deployedBasePath,
-    serverData: {
-        isDevelopment: true
-    }
-
 });

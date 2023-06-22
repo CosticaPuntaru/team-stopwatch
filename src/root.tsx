@@ -1,9 +1,8 @@
-import { component$, useContextProvider, useServerData, useVisibleTask$ } from '@builder.io/qwik';
+import { component$, useServerData, useVisibleTask$ } from '@builder.io/qwik';
 import { QwikCityProvider, RouterOutlet, ServiceWorkerRegister } from '@builder.io/qwik-city';
 import { RouterHead } from './components/router-head/router-head';
 
 import './global.css';
-import { BasePathContext, deployedBasePath, devBasePath } from "~/base-path";
 
 export interface RootProps {
     isDevelopment?: boolean;
@@ -11,7 +10,6 @@ export interface RootProps {
 
 export default component$(() => {
     const isDevelopment = useServerData<boolean>('isDevelopment');
-    useContextProvider(BasePathContext, { basePath: isDevelopment ? devBasePath : deployedBasePath });
     console.log('isDevelopment', isDevelopment)
     useVisibleTask$(() => {
         console.log('isDevelopment', isDevelopment)
