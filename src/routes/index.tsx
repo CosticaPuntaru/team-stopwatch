@@ -33,9 +33,12 @@ export default component$(() => {
                             type="submit"
                             class="text-white bg-gradient-to-r from-purple-500 to-pink-500 hover:bg-gradient-to-l focus:ring-4 focus:outline-none focus:ring-purple-200 dark:focus:ring-purple-800 font-medium rounded-lg text-sm px-5 py-2.5 text-center mr-2 mb-2"
                             onClick$={() => {
-                                console.log('add', currentPlayerName.value)
-                                store.players.push(currentPlayerName.value)
-                                currentPlayerName.value = ''
+                                const name = currentPlayerName.value.trim()
+                                if (name && !store.players.includes(name)) {
+                                    store.players.push(name)
+                                    store.selectedPlayers.push(name)
+                                    currentPlayerName.value = ''
+                                }
                             }}
                         >
                             Add player
@@ -73,7 +76,7 @@ export default component$(() => {
                                     class="sr-only peer"
                                     checked={store.selectedPlayers.includes(player)}
                                     onChange$={(e: any) => {
-                                        console.log('store.selectedPlayers',store.selectedPlayers.map(String))
+                                        console.log('store.selectedPlayers', store.selectedPlayers.map(String))
                                         if (e.target.checked) {
                                             store.selectedPlayers.push(player)
                                         } else {

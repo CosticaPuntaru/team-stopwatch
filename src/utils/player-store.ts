@@ -7,23 +7,16 @@ import { createContextId } from "@builder.io/qwik";
  * @return {string}         The phrase describing the amount of time
  */
 export function timeToHumans(ms: number) {
-    const seconds = ms / 1000;
-    const levels = [
-        [Math.floor(seconds / 31536000), 'Y'],
-        [Math.floor((seconds % 31536000) / 86400), 'D'],
-        [Math.floor(((seconds % 31536000) % 86400) / 3600), 'H'],
-        [Math.floor((((seconds % 31536000) % 86400) % 3600) / 60), 'M'],
-        [Math.floor((((seconds % 31536000) % 86400) % 3600)) % 60, 'S'],
-        [Math.floor(((((seconds % 31536000) % 86400) % 3600)) % 60 * 1000 %100), 'ms']
-    ] as const;
-    let returntext = '';
-
-    for (let i = 0, max = levels.length; i < max; i++) {
-        if (levels[i][0] === 0) continue;
-        returntext += ' ' + levels[i][0] + ' ' + (levels[i][0] === 1 ? levels[i][1]?.substr(0, levels[i][1].length - 1) : levels[i][1]);
-    }
-
-    return returntext.trim();
+    let d, h, m, s;
+    s = Math.floor(ms / 1000);
+    m = Math.floor(s / 60);
+    s = s % 60;
+    h = Math.floor(m / 60);
+    m = m % 60;
+    // eslint-disable-next-line prefer-const
+    d = Math.floor(h / 24);
+    h = h % 24;
+    return  h + " hours, " + m + " minutes, " + s + " seconds.";
 }
 
 export interface PlayerTime {
