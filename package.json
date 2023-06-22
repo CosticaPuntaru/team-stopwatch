@@ -6,7 +6,7 @@
   },
   "private": true,
   "scripts": {
-    "build.full": "qwik build",
+    "build.full": "qwik build && mv ./dist/team-stopwatch/* ./dist",
     "build": "qwik build",
     "build.client": "vite build",
     "build.preview": "vite build --ssr src/entry.preview.tsx",
