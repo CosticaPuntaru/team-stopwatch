@@ -1,5 +1,5 @@
 import { useContextProvider, useStore, useVisibleTask$ } from "@builder.io/qwik";
-import { playerStore, PlayerStore } from "~/utils/player-store";
+import {  playerStore, type PlayerStore } from "~/utils/player-store";
 import { useLocation } from "@builder.io/qwik-city";
 
 
