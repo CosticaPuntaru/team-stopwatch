@@ -7,7 +7,7 @@ import { createContextId } from "@builder.io/qwik";
  * @return {string}         The phrase describing the amount of time
  */
 export function timeToHumans(ms: number) {
-    let  h, m, s;
+    let h, m, s;
     const mss = Math.floor(ms % 1000);
     s = Math.floor(ms / 1000);
     m = Math.floor(s / 60);
