@@ -38,16 +38,21 @@ export function PlayerName({ name }: PlayerNameProps) {
     const bgColor = stringToColour(name);
 
     return (
-        <div style={getViewTransitionStyle('player-' + name.replaceAll(' ', '-'))}>
+        <div
+            class="flex items-center flex-1 gap-3"
+            style={getViewTransitionStyle('player-' + name.replaceAll(' ', '-'))}
+        >
             <div
-                class="relative inline-flex items-center justify-center w-10 h-10 overflow-hidden"
+                class="relative m-0 items-center inline-flex items-center justify-center w-10 h-10 overflow-hidden rounded-3xl"
                 style={{ background: bgColor, color: getContrastYIQ(bgColor) }}
             >
-                <span class="ml-3 text-sm font-medium text-gray-900 dark:text-gray-300">
+                <span class="text-sm font-medium text-gray-900 dark:text-gray-300 border-amber-300">
                     {initials}
                 </span>
             </div>
-            {name}
+            <div>
+                {name}
+            </div>
         </div>
     )
 

@@ -1,5 +1,5 @@
 import { useContextProvider, useStore, useVisibleTask$ } from "@builder.io/qwik";
-import {  playerStore, type PlayerStore } from "~/utils/player-store";
+import { playerStore, type PlayerStore } from "~/utils/player-store";
 import { useLocation } from "@builder.io/qwik-city";
 
 
@@ -11,11 +11,26 @@ export function useGameId() {
 
 export function usePlayerStore() {
     const gameId = useGameId()
-    const store = useStore<PlayerStore>({ players: [], games: {}, selectedPlayers: [], gameList: [] })
+    const store = useStore<PlayerStore>(() => {
+        const state: PlayerStore = { players: [], games: {}, selectedPlayers: [], gameList: [] }
+        if (!gameId || typeof localStorage === 'undefined') {
+            return state
+        }
+        const gameString = localStorage?.getItem('game-' + gameId)
+
+        if (gameString && gameId) {
+            state.games[gameId] = JSON.parse(gameString)
+        }
+        return state
+    })
     useContextProvider(playerStore, store)
 
     useVisibleTask$(({ track }) => {
         track(() => gameId)
+        if (!gameId || store.games[gameId]) {
+            return
+        }
+
         const gameString = localStorage?.getItem('game-' + gameId)
 
         if (gameString && gameId) {
@@ -33,8 +48,8 @@ export function usePlayerStore() {
         }
         const selectedPlayersFromLocalStorage = localStorage?.getItem('selectedPlayers')
         if (selectedPlayersFromLocalStorage) {
-            const storedSelectedPlayers: string[] = JSON.parse(selectedPlayersFromLocalStorage);
-            store.selectedPlayers = storedSelectedPlayers || []
+            // const storedSelectedPlayers: string[] = JSON.parse(selectedPlayersFromLocalStorage);
+            store.selectedPlayers = /*storedSelectedPlayers ||*/ []
         }
 
         const gameList = localStorage?.getItem('gameList')
@@ -64,7 +79,6 @@ export function usePlayerStore() {
                 track(player)
             })
         }
-        console.log('save store', JSON.stringify(store))
         localStorage?.setItem('players', JSON.stringify(store))
         localStorage?.setItem('selectedPlayers', JSON.stringify(store.selectedPlayers));
         localStorage?.setItem('gameList', JSON.stringify(Object.keys(store.games)));

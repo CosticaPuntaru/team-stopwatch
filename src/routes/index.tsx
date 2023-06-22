@@ -46,14 +46,34 @@ export default component$(() => {
 
             <div class="grid grid-cols-2 md:grid-cols-3 gap-4">
                 {store.players.map((player) => (
-                    <div key={player}>
-                        <label class="">
+                    <div
+                        key={player}
+                        class={["border-2 rounded-xl p-3 cursor-pointer", {
+                            'border-transparent': !store.selectedPlayers.includes(player),
+                            'border-green-500': store.selectedPlayers.includes(player)
+                        }]}
+
+                    >
+                        <label class="flex gap-3"
+                               onClick$={() => {
+                                   if (!store.selectedPlayers.includes(player)) {
+                                       store.selectedPlayers = [
+                                           ...store.selectedPlayers,
+                                           player
+                                       ]
+                                   } else {
+                                       store.selectedPlayers = store.selectedPlayers.filter((p) => p !== player)
+                                   }
+                               }}
+
+                        >
                             <div class="relative inline-flex items-center mb-4 cursor-pointer">
                                 <input
                                     type="checkbox"
                                     class="sr-only peer"
                                     checked={store.selectedPlayers.includes(player)}
                                     onChange$={(e: any) => {
+                                        console.log('store.selectedPlayers',store.selectedPlayers.map(String))
                                         if (e.target.checked) {
                                             store.selectedPlayers.push(player)
                                         } else {
@@ -61,24 +81,22 @@ export default component$(() => {
                                         }
                                     }}
                                 />
-                                <div
-                                    class="w-11 h-6 bg-gray-200 rounded-full peer peer-focus:ring-4 peer-focus:ring-blue-300 dark:peer-focus:ring-blue-800 dark:bg-gray-700 peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-0.5 after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all dark:border-gray-600 peer-checked:bg-blue-600"
-                                ></div>
 
-
-                                <PlayerName name={player}/>
                             </div>
+
+                            <PlayerName name={player}/>
+                            <button
+                                class="text-red-700 hover:text-white border border-red-700 hover:bg-red-800 focus:ring-4 focus:outline-none focus:ring-red-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center mr-2 mb-2 dark:border-red-500 dark:text-red-500 dark:hover:text-white dark:hover:bg-red-600 dark:focus:ring-red-900"
+                                type="button"
+                                onClick$={() => {
+                                    store.players = store.players.filter((p) => p !== player)
+                                }}
+                            >
+                                X
+                            </button>
                         </label>
 
-                        <button
-                            class="text-red-700 hover:text-white border border-red-700 hover:bg-red-800 focus:ring-4 focus:outline-none focus:ring-red-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center mr-2 mb-2 dark:border-red-500 dark:text-red-500 dark:hover:text-white dark:hover:bg-red-600 dark:focus:ring-red-900"
-                            type="button"
-                            onClick$={() => {
-                                store.players = store.players.filter((p) => p !== player)
-                            }}
-                        >
-                            X
-                        </button>
+
                     </div>
                 ))}
             </div>

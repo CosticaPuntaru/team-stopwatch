@@ -6,17 +6,17 @@ export default component$(function GamesPage() {
 
     return <div>
         <h1>Games </h1>
-        <ul>
+        <ol class="max-w-md space-y-1 text-gray-500 list-decimal list-inside dark:text-gray-400">
             {store.gameList.map((game) => (
                 <li key={game} onClick$={() => {
                     console.log('game', game)
                 }}>
                     <a href={`/team-stopwatch/games/game?gameId=${game}`}>
-                        {game}
+                        {new Date(parseInt(game)).toLocaleString()} - {game}
                     </a>
                 </li>
             ))}
-        </ul>
+        </ol>
     </div>
 
 });
