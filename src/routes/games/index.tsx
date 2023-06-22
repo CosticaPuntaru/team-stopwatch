@@ -11,7 +11,7 @@ export default component$(function GamesPage() {
                 <li key={game} onClick$={() => {
                     console.log('game', game)
                 }}>
-                    <a href={`/games/game?gameId=${game}`}>
+                    <a href={`/team-stopwatch/games/game?gameId=${game}`}>
                         {game}
                     </a>
                 </li>
