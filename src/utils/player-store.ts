@@ -7,16 +7,14 @@ import { createContextId } from "@builder.io/qwik";
  * @return {string}         The phrase describing the amount of time
  */
 export function timeToHumans(ms: number) {
-    let d, h, m, s;
+    let h, m, s;
     s = Math.floor(ms / 1000);
     m = Math.floor(s / 60);
     s = s % 60;
     h = Math.floor(m / 60);
     m = m % 60;
-    // eslint-disable-next-line prefer-const
-    d = Math.floor(h / 24);
     h = h % 24;
-    return  h + " hours, " + m + " minutes, " + s + " seconds.";
+    return h + " hours, " + m + " minutes, " + s + " seconds.";
 }
 
 export interface PlayerTime {
