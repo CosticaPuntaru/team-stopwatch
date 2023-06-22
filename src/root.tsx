@@ -9,11 +9,6 @@ export interface RootProps {
 }
 
 export default component$(() => {
-    const isDevelopment = useServerData<boolean>('isDevelopment');
-    console.log('isDevelopment', isDevelopment)
-    useVisibleTask$(() => {
-        console.log('isDevelopment', isDevelopment)
-    })
     return (
         <QwikCityProvider>
             <head>

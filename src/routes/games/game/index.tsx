@@ -33,9 +33,10 @@ export default component$(function GamesPage() {
             </div>
         )}
         {selectedGame && (
-            <ul>
+
+            <div class="grid grid-cols-2 md:grid-cols-3 gap-4">
                 {selectedGame.players.map((player) => (
-                    <li
+                    <div
                         key={player.name}
                         onClick$={() => {
                             if (player.time) {
@@ -52,9 +53,9 @@ export default component$(function GamesPage() {
                         <div style={getViewTransitionStyle(`player-time-${player.name}`)}>
                             {player.time ? timeToHumans(player.time) : 'not finished'}
                         </div>
-                    </li>
+                    </div>
                 ))}
-            </ul>
+            </div>
         )}
     </div>
 
