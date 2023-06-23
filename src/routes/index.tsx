@@ -11,41 +11,39 @@ export default component$(() => {
     const nav = useCustomNavigate();
     return (
         <>
-            <form>
-                <div class="grid gap-6 mb-6 md:grid-cols-2 max-w-md">
-                    <div>
-                        <label for="first_name" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Player
-                            name
-                        </label>
-                        <input
-                            value={currentPlayerName.value}
-                            type="text"
-                            onInput$={(e: any) => currentPlayerName.value = (e.target.value)}
+            <div class="grid gap-6 mb-6 md:grid-cols-2 max-w-md">
+                <div>
+                    <label for="first_name" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Player
+                        name
+                    </label>
+                    <input
+                        value={currentPlayerName.value}
+                        type="text"
+                        onInput$={(e: any) => currentPlayerName.value = (e.target.value)}
 
-                            id="first_name"
-                            class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                            placeholder="John" required
-                        />
-                    </div>
-
-                    <div class="flex items-end">
-                        <button
-                            type="submit"
-                            class="text-white bg-gradient-to-r from-purple-500 to-pink-500 hover:bg-gradient-to-l focus:ring-4 focus:outline-none focus:ring-purple-200 dark:focus:ring-purple-800 font-medium rounded-lg text-sm px-5 py-2.5 text-center mr-2 mb-2"
-                            onClick$={() => {
-                                const name = currentPlayerName.value.trim()
-                                if (name && !store.players.includes(name)) {
-                                    store.players.push(name)
-                                    store.selectedPlayers.push(name)
-                                    currentPlayerName.value = ''
-                                }
-                            }}
-                        >
-                            Add player
-                        </button>
-                    </div>
+                        id="first_name"
+                        class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                        placeholder="John" required
+                    />
                 </div>
-            </form>
+
+                <div class="flex items-end">
+                    <button
+                        type="submit"
+                        class="text-white bg-gradient-to-r from-purple-500 to-pink-500 hover:bg-gradient-to-l focus:ring-4 focus:outline-none focus:ring-purple-200 dark:focus:ring-purple-800 font-medium rounded-lg text-sm px-5 py-2.5 text-center mr-2 mb-2"
+                        onClick$={() => {
+                            const name = currentPlayerName.value.trim()
+                            if (name && !store.players.includes(name)) {
+                                store.players.push(name)
+                                store.selectedPlayers.push(name)
+                                currentPlayerName.value = ''
+                            }
+                        }}
+                    >
+                        Add player
+                    </button>
+                </div>
+            </div>
 
             <div class="grid grid-cols-2 md:grid-cols-3 gap-4">
                 {store.players.map((player) => (
