@@ -16,14 +16,6 @@ export function usePlayerStore() {
         return { players: [], games: {}, selectedPlayers: [], gameList: [] }
     })
 
-    useVisibleTask$(({ track }) => {
-        track(() => gameId)
-        const gameString = localStorage?.getItem('game-' + gameId)
-        console.log('gameString 2', gameString)
-        if (gameString && gameId) {
-            store.games[gameId] = JSON.parse(gameString)
-        }
-    })
 
     useContextProvider(playerStore, store)
 
@@ -34,7 +26,7 @@ export function usePlayerStore() {
         }
 
         const gameString = localStorage?.getItem('game-' + gameId)
-
+        console.log('gameString q', gameString)
         if (gameString && gameId) {
             store.games[gameId] = JSON.parse(gameString)
         }
