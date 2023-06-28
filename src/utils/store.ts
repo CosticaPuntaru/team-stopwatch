@@ -21,7 +21,7 @@ export function usePlayerStore() {
 
     useVisibleTask$(({ track }) => {
         track(() => gameId)
-        if (!gameId || store.games[gameId]) {
+        if (!gameId) {
             return
         }
 
