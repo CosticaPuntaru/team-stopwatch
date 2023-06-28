@@ -12,6 +12,7 @@ body,
 main {
     @apply min-h-full;
     @apply h-full;
+    margin: auto;
 }
 
 @layer components{

@@ -1,4 +1,4 @@
-import { component$, useContext, useSignal } from '@builder.io/qwik';
+import { $, component$, useContext, useSignal } from '@builder.io/qwik';
 import type { DocumentHead } from '@builder.io/qwik-city';
 import { playerStore } from "~/utils/player-store";
 import { useCustomNavigate } from "~/utils/navigation";
@@ -9,6 +9,14 @@ export default component$(() => {
     const currentPlayerName = useSignal('')
     const store = useContext(playerStore)
     const nav = useCustomNavigate();
+    const handleAddPlayer = $(() => {
+        const name = currentPlayerName.value.trim()
+        if (name && !store.players.includes(name)) {
+            store.players.push(name)
+            store.selectedPlayers.push(name)
+            currentPlayerName.value = ''
+        }
+    })
     return (
         <>
             <div class="grid gap-6 mb-6 md:grid-cols-2 max-w-md">
@@ -20,7 +28,11 @@ export default component$(() => {
                         value={currentPlayerName.value}
                         type="text"
                         onInput$={(e: any) => currentPlayerName.value = (e.target.value)}
-
+                        onkeydown$={(e: any) => {
+                            if (e.key === 'Enter') {
+                                handleAddPlayer()
+                            }
+                        }}
                         id="first_name"
                         class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                         placeholder="John" required
@@ -29,16 +41,9 @@ export default component$(() => {
 
                 <div class="flex items-end">
                     <button
-                        type="submit"
-                        class="text-white bg-gradient-to-r from-purple-500 to-pink-500 hover:bg-gradient-to-l focus:ring-4 focus:outline-none focus:ring-purple-200 dark:focus:ring-purple-800 font-medium rounded-lg text-sm px-5 py-2.5 text-center mr-2 mb-2"
-                        onClick$={() => {
-                            const name = currentPlayerName.value.trim()
-                            if (name && !store.players.includes(name)) {
-                                store.players.push(name)
-                                store.selectedPlayers.push(name)
-                                currentPlayerName.value = ''
-                            }
-                        }}
+                        type="button"
+                        class="text-white bg-gradient-to-r from-purple-500 to-pink-500 hover:bg-gradient-to-l focus:ring-4 focus:outline-none focus:ring-purple-200 dark:focus:ring-purple-800 font-medium rounded-lg text-sm px-5 py-2.5 text-center"
+                        onClick$={() => handleAddPlayer()}
                     >
                         Add player
                     </button>
@@ -68,22 +73,20 @@ export default component$(() => {
                                }}
 
                         >
-                            <div class="relative inline-flex items-center mb-4 cursor-pointer">
-                                <input
-                                    type="checkbox"
-                                    class="sr-only peer"
-                                    checked={store.selectedPlayers.includes(player)}
-                                    onChange$={(e: any) => {
-                                        console.log('store.selectedPlayers', store.selectedPlayers.map(String))
-                                        if (e.target.checked) {
-                                            store.selectedPlayers.push(player)
-                                        } else {
-                                            store.selectedPlayers = store.selectedPlayers.filter((p) => p !== player)
-                                        }
-                                    }}
-                                />
+                            <input
+                                type="checkbox"
+                                class="sr-only peer"
+                                checked={store.selectedPlayers.includes(player)}
+                                onChange$={(e: any) => {
+                                    console.log('store.selectedPlayers', store.selectedPlayers.map(String))
+                                    if (e.target.checked) {
+                                        store.selectedPlayers.push(player)
+                                    } else {
+                                        store.selectedPlayers = store.selectedPlayers.filter((p) => p !== player)
+                                    }
+                                }}
+                            />
 
-                            </div>
 
                             <PlayerName name={player}/>
                             <button
@@ -107,6 +110,9 @@ export default component$(() => {
                 class="text-white bg-gradient-to-br from-pink-500 to-orange-400 hover:bg-gradient-to-bl focus:ring-4 focus:outline-none focus:ring-pink-200 dark:focus:ring-pink-800 font-medium rounded-lg text-sm px-5 py-2.5 text-center mr-2 mb-2"
                 onClick$={() => {
                     console.log('start game')
+                    if (!store.selectedPlayers.length) {
+                        return
+                    }
                     const startTime = Date.now()
                     store.games[startTime] = {
                         startTime,

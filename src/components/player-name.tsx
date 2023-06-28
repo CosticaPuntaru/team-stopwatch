@@ -39,7 +39,7 @@ export function PlayerName({ name }: PlayerNameProps) {
 
     return (
         <div
-            class="flex items-center flex-1 gap-3"
+            class="flex items-center flex-1 gap-3 cursor-pointer"
             style={getViewTransitionStyle('player-' + name.replaceAll(' ', '-'))}
         >
             <div
