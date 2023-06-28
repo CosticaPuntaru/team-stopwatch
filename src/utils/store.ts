@@ -13,11 +13,12 @@ export function usePlayerStore() {
     const gameId = useGameId()
     const store = useStore<PlayerStore>(() => {
         const state: PlayerStore = { players: [], games: {}, selectedPlayers: [], gameList: [] }
+        console.log('gameId',gameId)
         if (!gameId || typeof localStorage === 'undefined') {
             return state
         }
         const gameString = localStorage?.getItem('game-' + gameId)
-
+        console.log('gameString',gameString)
         if (gameString && gameId) {
             state.games[gameId] = JSON.parse(gameString)
         }
