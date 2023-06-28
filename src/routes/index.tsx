@@ -121,6 +121,8 @@ export default component$(() => {
                             time: 0
                         })),
                     };
+                    localStorage?.setItem('game-' + startTime, JSON.stringify(store.games[startTime]))
+
                     new Audio("/team-stopwatch/files/race-start-beeps-125125.mp3").play();
                     setTimeout(() => {
                         nav(`/team-stopwatch/games/game?gameId=${startTime}`)
