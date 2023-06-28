@@ -16,10 +16,10 @@ export function usePlayerStore() {
         return { players: [], games: {}, selectedPlayers: [], gameList: [] }
     })
 
-    useVisibleTask$(({track}) => {
+    useVisibleTask$(({ track }) => {
         track(() => gameId)
         const gameString = localStorage?.getItem('game-' + gameId)
-        console.log('gameString', gameString)
+        console.log('gameString 2', gameString)
         if (gameString && gameId) {
             store.games[gameId] = JSON.parse(gameString)
         }
@@ -66,7 +66,9 @@ export function usePlayerStore() {
             store.games[gameId].players.forEach((player) => {
                 track(player)
             })
-            localStorage?.setItem('game-' + gameId, JSON.stringify(store.games[gameId]))
+            if (store.games[gameId]) {
+                localStorage?.setItem('game-' + gameId, JSON.stringify(store.games[gameId]))
+            }
         }
     })
 
