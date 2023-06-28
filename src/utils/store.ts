@@ -10,26 +10,20 @@ export function useGameId() {
 }
 
 export function usePlayerStore() {
+    console.log('usePlayerStore')
     const gameId = useGameId()
     const store = useStore<PlayerStore>(() => {
         const state: PlayerStore = { players: [], games: {}, selectedPlayers: [], gameList: [] }
         console.log('gameId', gameId)
-        if (!gameId || typeof localStorage === 'undefined') {
-            return state
-        }
-        const gameString = localStorage?.getItem('game-' + gameId)
-        if (gameString && gameId) {
-            const handler = {
-                get(obj: any, prop: string) {
-                    return obj[prop];
-                },
-                set(obj: any, prop: string, value: any) {
-                    return obj[prop] = value;
-                }
-            };
-            state.games[gameId] = new Proxy(JSON.parse(gameString), handler)
-        }
+
         return state
+    })
+    useVisibleTask$(() => {
+        const gameString = localStorage?.getItem('game-' + gameId)
+        console.log('gameString', gameString)
+        if (gameString && gameId) {
+            store.games[gameId] = JSON.parse(gameString)
+        }
     })
     useContextProvider(playerStore, store)
 
