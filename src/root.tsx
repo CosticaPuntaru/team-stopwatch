@@ -13,7 +13,7 @@ export default component$(() => {
         <QwikCityProvider>
             <head>
                 <meta charSet="utf-8"/>
-                <link rel="manifest" href="/manifest.json"/>
+                <link rel="manifest" href="/team-stopwatch/manifest.json"/>
                 <RouterHead/>
             </head>
             <body lang="en" class="border-gray-200 bg-gray-50 dark:bg-gray-800 dark:border-gray-700 dark:text-white">
