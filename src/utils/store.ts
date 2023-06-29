@@ -1,32 +1,22 @@
-import { useContextProvider, useStore, useVisibleTask$ } from "@builder.io/qwik";
+import { useContextProvider, useSignal, useStore, useVisibleTask$ } from "@builder.io/qwik";
 import { playerStore, type PlayerStore } from "~/utils/player-store";
 import { useLocation } from "@builder.io/qwik-city";
 
 
 export function useGameId() {
-    const { url: { searchParams } } = useLocation()
-
-    return searchParams.get('gameId')
+    const location = useLocation()
+    const gameId = useSignal<string | null>(null);
+    useVisibleTask$(({ track }) => {
+        track(location);
+        gameId.value = location.url.searchParams.get('gameId')
+    })
+    return gameId
 }
 
 export function usePlayerStore() {
-    console.log('usePlayerStore')
-    const gameId = useGameId()
+    const gameIdSignal = useGameId()
     const store = useStore<PlayerStore>(() => {
         return { players: [], games: {}, selectedPlayers: [], gameList: [] }
-    })
-
-    useVisibleTask$(({ track }) => {
-        track(() => gameId)
-        const gameString = localStorage?.getItem('game-' + gameId)
-        console.log('gameString', {
-            gameString,
-            gameId,
-            currentGame: gameId && store.games[gameId]
-        })
-        if (gameString && gameId && !store.games[gameId]) {
-            store.games[gameId] = JSON.parse(gameString)
-        }
     })
 
     useContextProvider(playerStore, store)
@@ -52,6 +42,9 @@ export function usePlayerStore() {
         }
     });
     useVisibleTask$(({ track }) => {
+        track(gameIdSignal)
+        const gameId = gameIdSignal.value
+
         if (gameId) {
             track(store.games[gameId])
             store.games[gameId].players.forEach((player) => {
@@ -62,6 +55,9 @@ export function usePlayerStore() {
     })
 
     useVisibleTask$(({ track }) => {
+
+        track(gameIdSignal)
+        const gameId = gameIdSignal.value
         track(store)
         track(store.players)
         track(store.games)

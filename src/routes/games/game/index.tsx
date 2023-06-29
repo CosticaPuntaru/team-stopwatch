@@ -7,12 +7,12 @@ import { TimePassed } from "~/components/time-passed";
 
 export default component$(function GamesPage() {
     const store = useContext(playerStore)
-    const gameId = useGameId()
+    const gameIdSignal = useGameId();
+    const gameId = gameIdSignal.value;
     const selectedGame = gameId && store.games[gameId] || { startTime: 1, players: [] }
     const remainingPlayerCount = selectedGame.players.filter((p) => !p.time).length
     const filterPlayer = useSignal('')
 
-    // @ts-ignore
     return <div>
         <h1 class="text-1xl font-extrabold dark:text-white">
             Games
