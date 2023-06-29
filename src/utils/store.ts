@@ -10,6 +10,7 @@ export function useGameId() {
         track(location);
         gameId.value = location.url.searchParams.get('gameId')
     })
+    console.log('gameId.value',gameId.value)
     return gameId
 }
 
